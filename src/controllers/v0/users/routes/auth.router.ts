@@ -12,12 +12,16 @@ const router: Router = Router();
 
 // change function return type back to string
 async function generatePassword(plainTextPassword: string): Promise<any> {
-    //@TODO Use Bcrypt to Generated Salted Hashed Passwords
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(plainTextPassword, salt);
+    return hashedPassword;
 }
 
 // change function return type back to boolean
 async function comparePasswords(plainTextPassword: string, hash: string): Promise<any> {
-    //@TODO Use Bcrypt to Compare your password to your Salted Hashed Password
+    const passwordsMatch = bcrypt.compare(plainTextPassword, hash);
+    return passwordsMatch;
 }
 
 // change function return type back to string
