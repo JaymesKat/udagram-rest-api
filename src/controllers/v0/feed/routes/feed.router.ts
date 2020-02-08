@@ -36,12 +36,8 @@ router.patch('/:id',
 
         const { url, caption } = req.body;
 
-        if (!caption) {
-            return res.status(400).send({ message: "Invalid caption" });
-        }
-
-        if (!url) {
-            return res.status(400).send({ message: "Invalid file url" });
+        if (!caption && !url) {
+            return res.status(400).send({ message: "Insufficient data to update" });
         }
 
         const feedItem = await new FeedItem({
